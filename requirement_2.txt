@@ -1,0 +1,17 @@
+scikit-image
+gym
+lxml
+human_body_prior
+autograd
+scikit-learn
+patchelf
+rl-games==1.1.4
+wandb
+pyvirtualdisplay
+patchelf
+lxml
+ipdb
+chardet
+cchardet
+imageio-ffmpeg
+gdown

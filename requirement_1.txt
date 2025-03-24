@@ -1,0 +1,16 @@
+mujoco
+pytorch_lightning
+numpy-stl
+vtk
+patchelf
+termcolor
+torchgeometry
+scikit-image
+numpy
+scipy
+ipdb
+joblib>=1.2.0
+opencv-python==4.6.0.66
+tqdm 
+pyyaml
+wandb
