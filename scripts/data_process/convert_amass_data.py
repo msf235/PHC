@@ -29,10 +29,8 @@ if __name__ == "__main__":
     parser.add_argument("--path", type=str, default="")
     args = parser.parse_args()
 
-    # process_split = "vald"
     process_split = "train"
-    # upright_start = False
-    upright_start = True
+    upright_start = False
     robot_cfg = {
         "mesh": False,
         "rel_joint_lm": True,
@@ -59,9 +57,9 @@ if __name__ == "__main__":
     )
     if not osp.isdir(args.path):
         print("Please specify AMASS data path")
-        # import ipdb
-        #
-        # ipdb.set_trace()
+        import ipdb
+
+        ipdb.set_trace()
 
     all_pkls = glob.glob(f"{args.path}/**/*.npz", recursive=True)
     amass_occlusion = joblib.load("sample_data/amass_copycat_occlusion_v3.pkl")
@@ -89,9 +87,9 @@ if __name__ == "__main__":
     length_acc = []
     for data_path in tqdm(all_pkls):
         bound = 0
-        # splits = data_path.split("/")[7:]
         splits = data_path.split("/")[3:]
         key_name_dump = "0-" + "_".join(splits).replace(".npz", "")
+
         if not splits[0] in process_set:
             continue
 
@@ -109,14 +107,17 @@ if __name__ == "__main__":
             else:
                 print("issue irrecoverable", key_name_dump, issue)
                 continue
+
+        # entry_data = dict(np.load(open(data_path, "rb"), allow_pickle=True))
         try:
             entry_data = dict(np.load(open(data_path, "rb"), allow_pickle=True))
         except zipfile.BadZipFile:
-            print("Skipping", data_path, "due to bad zip file")
-
-        if not "mocap_framerate" in entry_data:
             continue
-        framerate = entry_data["mocap_framerate"]
+
+        if not "mocap_frame_rate" in entry_data:
+            print("no mocap_framerate", data_path)
+            continue
+        framerate = entry_data["mocap_frame_rate"]
 
         if "0-KIT_442_PizzaDelivery02_poses" == key_name_dump:
             bound = -2
@@ -205,23 +206,19 @@ if __name__ == "__main__":
         new_motion_out["pose_aa"] = pose_aa
         new_motion_out["fps"] = fps
 
-        print("Adding data from ", data_path)
-
+        print("adding data from ", data_path)
         amass_full_motion_dict[key_name_dump] = new_motion_out
 
-    # import ipdb
+    import ipdb
 
-    # ipdb.set_trace()
+    ipdb.set_trace()
     if upright_start:
         joblib.dump(
             amass_full_motion_dict,
-            # "data/amass/amass_train_take6_upright.pkl",
-            f"./amass/amass_{process_split}_take6_upright.pkl",
+            "data/amass/amass_train_take6_upright.pkl",
             compress=True,
         )
     else:
         joblib.dump(
-            amass_full_motion_dict,
-            f"./amass/amass_{process_split}_take6.pkl",
-            compress=True,
+            amass_full_motion_dict, "data/amass/amass_train_take6.pkl", compress=True
         )
