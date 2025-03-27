@@ -4,6 +4,7 @@ import sys
 import pdb
 import os.path as osp
 import zipfile
+import pdb
 
 sys.path.append(os.getcwd())
 
@@ -55,8 +56,8 @@ if __name__ == "__main__":
     smpl_local_robot = LocalRobot(
         robot_cfg,
     )
+    pdb.set_trace()
 
-    all_pkls = glob.glob(f"{args.path}/**/*.npz", recursive=True)
     amass_occlusion = joblib.load("sample_data/amass_copycat_occlusion_v3.pkl")
     amass_full_motion_dict = {}
     length_acc = []
@@ -167,7 +168,7 @@ if __name__ == "__main__":
         pose_quat_global = new_sk_state.global_rotation.numpy()
         pose_quat = new_sk_state.local_rotation.numpy()
         fps = 30
-
+        pdb.set_trace()
         new_motion_out = {}
         new_motion_out["pose_quat_global"] = pose_quat_global
         new_motion_out["pose_quat"] = pose_quat

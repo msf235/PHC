@@ -29,9 +29,10 @@ if __name__ == "__main__":
     parser.add_argument("--path", type=str, default="")
     args = parser.parse_args()
 
-    process_split = "vald"
-    upright_start = False
-    # upright_start = True
+    # process_split = "vald"
+    process_split = "train"
+    # upright_start = False
+    upright_start = True
     robot_cfg = {
         "mesh": False,
         "rel_joint_lm": True,
@@ -203,6 +204,8 @@ if __name__ == "__main__":
         new_motion_out["gender"] = gender
         new_motion_out["pose_aa"] = pose_aa
         new_motion_out["fps"] = fps
+
+        print("Adding data from ", data_path)
 
         amass_full_motion_dict[key_name_dump] = new_motion_out
 
