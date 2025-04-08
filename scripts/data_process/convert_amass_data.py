@@ -30,7 +30,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     process_split = "train"
-    upright_start = False
+    # upright_start = False
+    upright_start = True
     robot_cfg = {
         "mesh": False,
         "rel_joint_lm": True,
@@ -115,7 +116,7 @@ if __name__ == "__main__":
             continue
 
         if not "mocap_frame_rate" in entry_data:
-            print("no mocap_framerate", data_path)
+            # print("no mocap_framerate", data_path)
             continue
         framerate = entry_data["mocap_frame_rate"]
 
@@ -206,19 +207,18 @@ if __name__ == "__main__":
         new_motion_out["pose_aa"] = pose_aa
         new_motion_out["fps"] = fps
 
-        print("adding data from ", data_path)
+        # print("adding data from ", data_path)
         amass_full_motion_dict[key_name_dump] = new_motion_out
 
-    import ipdb
-
-    ipdb.set_trace()
     if upright_start:
         joblib.dump(
             amass_full_motion_dict,
-            "data/amass/amass_train_take6_upright.pkl",
+            "/storage/amass/amass_train_take6_upright.pkl",
             compress=True,
         )
     else:
         joblib.dump(
-            amass_full_motion_dict, "data/amass/amass_train_take6.pkl", compress=True
+            amass_full_motion_dict,
+            "/storage/amass/amass_train_take6.pkl",
+            compress=True,
         )

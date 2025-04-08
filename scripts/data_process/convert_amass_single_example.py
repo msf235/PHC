@@ -30,8 +30,8 @@ if __name__ == "__main__":
     parser.add_argument("--path", type=str, default="")
     args = parser.parse_args()
 
-    upright_start = False
-    # upright_start = True
+    # upright_start = False
+    upright_start = True
     robot_cfg = {
         "mesh": False,
         "rel_joint_lm": True,
@@ -56,7 +56,6 @@ if __name__ == "__main__":
     smpl_local_robot = LocalRobot(
         robot_cfg,
     )
-    pdb.set_trace()
 
     amass_occlusion = joblib.load("sample_data/amass_copycat_occlusion_v3.pkl")
     amass_full_motion_dict = {}
@@ -88,9 +87,9 @@ if __name__ == "__main__":
         except zipfile.BadZipFile:
             print("Skipping", data_path, "due to bad zip file")
 
-        if not "mocap_framerate" in entry_data:
+        if not "mocap_frame_rate" in entry_data:
             continue
-        framerate = entry_data["mocap_framerate"]
+        framerate = entry_data["mocap_frame_rate"]
 
         if "0-KIT_442_PizzaDelivery02_poses" == key_name_dump:
             bound = -2
@@ -168,7 +167,6 @@ if __name__ == "__main__":
         pose_quat_global = new_sk_state.global_rotation.numpy()
         pose_quat = new_sk_state.local_rotation.numpy()
         fps = 30
-        pdb.set_trace()
         new_motion_out = {}
         new_motion_out["pose_quat_global"] = pose_quat_global
         new_motion_out["pose_quat"] = pose_quat
