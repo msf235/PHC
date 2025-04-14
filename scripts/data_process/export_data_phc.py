@@ -177,15 +177,16 @@ def convert_mujoco_to_smpl(qpos):
         )
         pose_quat = new_sk_state.local_rotation.numpy()
 
-        pose_quat_global = new_sk_state.global_rotation.numpy()
-        pose_quat = new_sk_state.local_rotation.numpy()
+    pose_quat_global = new_sk_state.global_rotation.numpy()
+    pose_quat = new_sk_state.local_rotation.numpy()
 
-    joint_body_ids = [model.body(name).id for name in SMPL_BONE_ORDER_NAMES]
-    pose_quat_global_wxyz = data["xquats"][::skip, joint_body_ids]  # shape: [24, 4]
-    pose_quat_global_smpl = convert_mujoco_quat_to_scipy(pose_quat_global_wxyz)
+    # joint_body_ids = [model.body(name).id for name in SMPL_BONE_ORDER_NAMES]
+    # pose_quat_global_wxyz = data["xquats"][::skip, joint_body_ids]  # shape: [24, 4]
+    # pose_quat_global_smpl = convert_mujoco_quat_to_scipy(pose_quat_global_wxyz)
 
     new_motion_out = {}
-    new_motion_out["pose_quat_global"] = pose_quat_global_smpl
+    # new_motion_out["pose_quat_global"] = pose_quat_global_smpl
+    new_motion_out["pose_quat_global"] = pose_quat_global
     new_motion_out["pose_aa"] = pose_aa_smpl_flat
     new_motion_out["fps"] = 30
     new_motion_out["pose_quat"] = pose_quat
