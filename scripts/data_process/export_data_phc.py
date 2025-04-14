@@ -194,6 +194,8 @@ def convert_mujoco_to_smpl(qpos):
     new_motion_out["beta"] = beta
     new_motion_out["gender"] = "neutral"
 
+    breakpoint()
+
     return new_motion_out
 
 
