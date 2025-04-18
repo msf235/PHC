@@ -195,8 +195,6 @@ def convert_mujoco_to_smpl(qpos):
     new_motion_out["beta"] = beta
     new_motion_out["gender"] = "neutral"
 
-    breakpoint()
-
     return new_motion_out
 
 
@@ -207,11 +205,12 @@ if __name__ == "__main__":
         data_load = np.load(f)
         # data_load = joblib.load(f)
     # framerate = int(round(1 / model.opt.timestep))
-    framerate = int(round(1 / 0.0005))
-    skip = int(framerate / 30)
-    qpos = data_load[::skip]
+    # framerate = int(round(1 / 0.0005))
+    # skip = int(framerate / 30)
+    # qpos = data_load[::skip]
+    qpos = data_load
 
     # Initialize environment
 
     out = convert_mujoco_to_smpl(qpos)
-    joblib.dump({"0": out}, "test_processed_smpl_data.pkl")
+    joblib.dump({"0": out}, "sample_data/test_processed_smpl_data.pkl")
